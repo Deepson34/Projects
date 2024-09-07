@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom"
+
 function Navbar(){
     return(
         <nav class="bg-gray-800">
@@ -25,7 +27,7 @@ function Navbar(){
         <div class="hidden sm:ml-6 sm:block">
           <div class="flex space-x-4">
 
-            <a href="#" class="rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white" aria-current="page">+ADD</a>
+            <Link to="/create" class="rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white" aria-current="page">+ADD</Link>
           </div>
         </div>
       </div>
