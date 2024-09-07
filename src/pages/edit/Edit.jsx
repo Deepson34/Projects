@@ -1,7 +1,12 @@
+import Form from "../../components/Form"
+import Navbar from "../../components/Navbar"
 
 function Edit(){
     return(
-        <h1>Edit page ho </h1>
+        <>
+        <Navbar/>
+        <Form type='edit'/>
+        </>
     )
 }
 
