@@ -1,7 +1,37 @@
-import { Link } from "react-router-dom"
+import { Link, useNavigate, useParams } from "react-router-dom"
 import Navbar from "../../components/Navbar"
+import axios from "axios"
+import { useEffect, useState } from "react"
 
 function Single(){
+    const {id}=useParams()
+    const navigate=useNavigate()
+    const[product,setProduct]=useState({
+      productName : "sjakhjkashd",
+      productDescription: "ahjsdhda",
+      productprice : "123"
+    })
+    const fetchProduct =async()=>{
+        const response = await axios.get("https://66dc988a47d749b72acc07ae.mockapi.io/Products/"+id)
+        if(response.status === 200){
+            setProduct(response.data)
+        }
+    }
+
+    const deleteMe =async()=>{
+      const response = await axios.get("https://66dc988a47d749b72acc07ae.mockapi.io/Products/"+id)
+      if(response.status === 200){
+        navigate("/")
+      }else{
+        alert("not delete!!!")
+      }
+  }
+
+
+
+    useEffect(()=>{
+        fetchProduct()
+    },[])
     return (
         <>
         <Navbar/>
@@ -9,26 +39,16 @@ function Single(){
         <div class="h-screen w-full flex items-center justify-center  bg-gray-200 dark:bg-gray-800">
   <article class="max-w-sm w-full bg-white rounded-lg shadow-lg overflow-hidden dark:bg-gray-700">
     <div>
-      <img class="object-cover h-64 w-full" src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NzEyNjZ8MHwxfHNlYXJjaHw1fHxzbmVha2Vyc3xlbnwwfDB8fHwxNzEyMjIzNDAyfDA&ixlib=rb-4.0.3&q=80&w=1080" alt="Converse sneakers" />
+      <img class="object-cover h-64 w-full" src="https://v1.tailwindcss.com/img/card-top.jpg" alt="Converse sneakers" />
     </div>
 
     <div class="flex flex-col gap-1 mt-4 px-4">
-      <h2 class="text-lg font-semibold text-gray-800 dark:text-gray-50">Converse Sneakers</h2>
-      <span class="font-normal text-gray-600 dark:text-gray-300">High Top (Lemon Yellow)</span>
-      <span class="font-semibold text-gray-800 dark:text-gray-50">$60</span>
+      <h2 class="text-lg font-semibold text-gray-800 dark:text-gray-50">{product.productName}</h2>
+      <span class="font-normal text-gray-600 dark:text-gray-300">{product.productDescription}</span>
+      <span class="font-semibold text-gray-800 dark:text-gray-50">${product.productPrice}</span>
     </div>
 
-    <div class="flex gap-4 mt-4 px-4">
-      <span class="sr-only">Colors available</span>
 
-      <button aria-label="Yellow" class="p-1 border border-gray-200 dark:border-gray-500 rounded-full cursor-pointer bg-yellow-500 dark:bg-yellow-400"></button>
-
-      <button aria-label="Red" class="p-1 border border-gray-200 dark:border-gray-500 rounded-full cursor-pointer bg-red-500 dark:bg-red-400"></button>
-
-      <button aria-label="Blue" class="p-1 border border-gray-200 dark:border-gray-500 rounded-full cursor-pointer bg-blue-500 dark:bg-blue-400"></button>
-
-      <button aria-label="Black" class="p-1 border border-gray-200 dark:border-gray-500 rounded-full cursor-pointer bg-gray-800 dark:bg-gray-600"></button>
-    </div>
 
     <div class="mt-4 p-4 border-t border-gray-200 dark:border-gray-500">
     <div class="flex space-x-4">
@@ -39,7 +59,7 @@ function Single(){
    </Link>
 
     <Link>
-    <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+    <button onClick={deleteMe} class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
         Delete
     </button>
     </Link>
